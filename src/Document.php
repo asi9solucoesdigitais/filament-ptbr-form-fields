@@ -49,6 +49,19 @@ class Document extends TextInput
         return $this;
     }
 
+    public function dehydrateMask(): static
+    {
+        $this->dehydrateStateUsing(function ($state) {
+            if (blank($state)) {
+                return $state;
+            }
+
+            return preg_replace('/\D/', '', $state);
+        });
+
+        return $this;
+    }
+
     public function validation(bool|Closure $condition = true): static
     {
         $this->validation = $condition;
